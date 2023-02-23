@@ -4,7 +4,7 @@ import cors from "cors";
 import connectDB from "./mongodb/connect.js";
 import PostRoutes from "./routes/postRoute.js";
 import aiRoutes from "./routes/aiRoute.js";
-
+const port = process.env.PORT || 4090;
 //Configure environment
 dotenv.config();
 
@@ -22,8 +22,8 @@ app.get('/',(req, res)=>{
 const startServer = async () => {
   try {
     connectDB(process.env.MONGODB_URL);
-    app.listen(4090, () =>
-      console.log("Server has started on https://crul.onrender.com")
+    app.listen(port, () =>
+      console.log("Server has started ")
     );
   } catch (err) {
     console.log(err);
