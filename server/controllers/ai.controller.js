@@ -13,6 +13,26 @@ const testRoute = (req, res) => {
   res.send("Hello from CRUL!");
 };
 
+const generateImage2 = async (req,res)=>{
+  req.body = {
+    prompt: "Generate a picture of a cat wearing a hat"
+  }
+  try {
+    const { prompt } = req.body;
+    const aiResponse = await openai.createImage({
+      prompt,
+      n: 1,
+      size: "1024x1024",
+      response_format: "url",
+    });
+    const image = aiResponse.data.data[0].url;
+    return res.redirect(image);
+    //res.status(200).json({ photo: image });
+  } catch (error) {
+    console.log(error?.response.data.error.message);
+    res.status(500).send(error?.response.data.error.message);
+  }
+}
 const generateImage = async (req, res) => {
   try {
     const { prompt } = req.body;
@@ -52,4 +72,4 @@ const generateJokes = async(req, res) => {
   }
 }
 
-export { testRoute, generateImage, generateJokes };
+export { testRoute, generateImage, generateJokes ,generateImage2};
